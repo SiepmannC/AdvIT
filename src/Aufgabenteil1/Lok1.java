@@ -6,31 +6,21 @@ public class Lok1 implements Runnable{
 	
 		public Lok1( Aufgabenteil1 Info) {
 			this.Info = Info;
-		}
+		}//Lok1
 		
 		
 		public void run() {
 		
 		while(true) {
-			try {
+			
 				
 				//fahren
-				Thread.sleep((long) Math.random()*1000);
 				Info.enterLok1();
-				// Mittelteil
-				Thread.sleep((long) Math.random()*200);
+				
+				// Lok 1 im mittleren Teilstück
 				Info.exitLok1();
-				
-				
-				
-				
-				
-			} catch (InterruptedException e) {
-				
-				e.printStackTrace();
-			}
 			
-		}
-	}
+		}//while
+	}//run
+}//class
 
-}
