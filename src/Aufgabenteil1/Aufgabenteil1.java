@@ -98,7 +98,7 @@ public void enterLok1() {
 		
 		
 	
-	public void exitLok1() {
+	public void exitLok1(){
 		
 		
 		//Verbrauch einer Einheit/ Senkung des Buffers
