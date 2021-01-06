@@ -49,6 +49,7 @@ class Aufgabenteil1Test {
             assertEquals(number, counter % 2);
             counter++;
         }
+        System.out.println(" ");
         System.out.println("Anzahl der Durchfahrten" + aufg.getBufferHistory().size());
     }
 }
