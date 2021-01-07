@@ -1,90 +1,93 @@
 package Aufgabenteil2;
 
+
 import java.util.concurrent.Semaphore;
 
-public class privateSemaphore extends Thread {
+public class Aufgabenteil2 extends Thread {
 
-	private static Semaphore[] privSem = new Semaphore[2];
-	
+	// Initialisieren der Semaphore
+	public static Semaphore[] privSem = new Semaphore[2];
 
-	private Semaphore mutex = new Semaphore(1);
+	public Aufgabenteil2() {
+		// Leerer Constructor
 
-	private boolean MitteFree = true;
-
-	public privateSemaphore(Semaphore[] privSem) {
-		this.privSem = privSem;
-	}
+	}// Aufgabenteil2
 
 	public void enterLok0() {
 		try {
-
+			// privates Semaphor
 			privSem[0].acquire();
+
 			System.out.println("Die Lok 0 fährt in das mittlere Teilstück");
+
+			// Fahrt durch das mittlere Stück
 			Thread.sleep((long) (Math.random() * 200));
 		} catch (Exception e1) {
 			e1.printStackTrace();
-		}
+		} // try/catch
 
-	}
+	}// enterLok0
 
 	public void exitLok0() {
 		try {
-			mutex.acquire();
-			MitteFree = true;
-			System.out.println("							Die Lok 0 verlässt das Mittelstück");
-			privSem[1].release();
-			mutex.release();
 
+			System.out.println("							Die Lok 0 verlässt das Mittelstück");
+
+			// Freigeben der anderen Lokomotive
+			privSem[1].release();
+
+			// Lokomotive fährt die restliche Strecke
 			Thread.sleep((long) (Math.random() * 500));
 		} catch (Exception e2) {
 			e2.printStackTrace();
-		}
-	}
+		} // try/catch
+	}// exitLok0
 
 	public void enterLok1() {
 
 		try {
 
+			// privates Semaphor
 			privSem[1].acquire();
 			System.out.println("	Die Lok 1 fährt in das mittlere Teilstück");
+
+			// Lok0 fährt durch das Mittelstück.
 			Thread.sleep((long) (Math.random() * 200));
 
 		} catch (Exception e3) {
 			e3.printStackTrace();
-		}
-	}
+		} // try/catch
+	}// enterLok1
 
 	public void exitLok1() {
 		try {
-			mutex.acquire();
-			MitteFree = true;
-			System.out.println("							Die Lok 1 verlässt das Mittelstück");
-			privSem[0].release();
-			mutex.release();
 
+			System.out.println("							Die Lok 1 verlässt das Mittelstück");
+
+			// Freigeben der anderen Lokomotive
+			privSem[0].release();
+
+			// Lokomotive fährt die restliche Strecke
 			Thread.sleep((long) (Math.random() * 500));
 		} catch (Exception e4) {
 			e4.printStackTrace();
-		}
-	}
+		} // try/catch
+	}// exitLok1
 
 	public static void main(String[] args) {
-
-		int Lokomotiven = 2;
-		
-			privSem[0]=new Semaphore(1,true);
-			privSem[1]=new Semaphore(0,true);
-		
 		
 
-		privateSemaphore[] Lok = new privateSemaphore[Lokomotiven];
+		privSem[0] = new Semaphore(1, true);
+		privSem[1] = new Semaphore(0, true);
 
-		// Start von zwei Threads (Lok 0 & Lok 1)
+		Aufgabenteil2[] Lok = new Aufgabenteil2[2];
 
-		for (int i = 0; i < Lokomotiven; i++) {
-			Lok[i] = new privateSemaphore(privSem);
+		
+		//Initialisieren von zwei Privaten Semaphoren
+		for (int i = 0; i < 2; i++) {
+			Lok[i] = new Aufgabenteil2();
 		}
-
+		// Start von zwei Threads (Lok 0 & Lok 1)
 		new Thread(new Lok0_privSem(Lok[0])).start();
 		new Thread(new Lok1_privSem(Lok[1])).start();
 

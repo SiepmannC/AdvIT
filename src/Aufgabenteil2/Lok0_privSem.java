@@ -6,10 +6,10 @@ public class Lok0_privSem implements Runnable{
 	
 	
 
-		privateSemaphore Infos;
+	Aufgabenteil2 Infos;
 		
 		
-			public Lok0_privSem( privateSemaphore Infos) {
+			public Lok0_privSem( Aufgabenteil2 Infos) {
 				this.Infos = Infos;
 			}//Lok0
 			
