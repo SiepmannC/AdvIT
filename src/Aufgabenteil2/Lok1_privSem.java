@@ -2,10 +2,10 @@ package Aufgabenteil2;
 
 public class Lok1_privSem implements Runnable {
 	
-	privateSemaphore Infos;
+	Aufgabenteil2 Infos;
 	
 	
-	public Lok1_privSem( privateSemaphore Infos) {
+	public Lok1_privSem( Aufgabenteil2 Infos) {
 		this.Infos = Infos;
 	}//Lok0
 	
