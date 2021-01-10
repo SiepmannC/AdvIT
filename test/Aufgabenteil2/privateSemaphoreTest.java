@@ -33,7 +33,7 @@ class privateSemaphoreTest {
 
         while (true) {
             System.out.print(".");
-            if (System.currentTimeMillis() - startTime > 10 * 1000) {
+            if (System.currentTimeMillis() - startTime > 100 * 1000) {
                 System.out.println("~");
                 try {
                     t0.interrupt();
@@ -58,6 +58,6 @@ class privateSemaphoreTest {
             assertEquals(number, counter % 2);
             counter++;
         }
-
     }
+
 }
