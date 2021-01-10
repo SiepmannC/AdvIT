@@ -22,7 +22,7 @@ public class Aufgabenteil2 extends Thread {
 
     Aufgabenteil2(ArrayList<Integer> history, Semaphore[] privSem) {
         this.history = history;
-        this.privSem = privSem;
+        Aufgabenteil2.privSem = privSem;
     }
 
     void enterLok0() {

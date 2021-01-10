@@ -32,7 +32,7 @@ public class Aufgabenteil1 extends Thread {
 
 
     public Aufgabenteil1(ArrayList<Integer> bufferHistory) {
-        this.bufferHistory = new ArrayList<>();
+        this.bufferHistory = bufferHistory;
 
     }
     //Aufgabenteil1

@@ -1,7 +1,7 @@
 package Aufgabenteil1;
 
 public class Lok1 implements Runnable {
-    Aufgabenteil1 Info;
+    private Aufgabenteil1 Info;
 
     public Lok1(Aufgabenteil1 Info) {
         this.Info = Info;

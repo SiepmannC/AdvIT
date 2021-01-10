@@ -1,7 +1,7 @@
 package Aufgabenteil2;
 
 public class Lok1_privSem implements Runnable {
-    Aufgabenteil2 Infos;
+    private Aufgabenteil2 Infos;
 
     Lok1_privSem(Aufgabenteil2 Infos) {
         this.Infos = Infos;
