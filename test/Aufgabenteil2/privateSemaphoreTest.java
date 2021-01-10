@@ -7,8 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class privateSemaphoreTest {
 
-    private Thread t0;
-    private Thread t1;
     private static Semaphore[] privSem = new Semaphore[2];
     private Aufgabenteil2[] Lok;
     private static ArrayList<Integer> history0 = new ArrayList<>();
@@ -25,15 +23,15 @@ class privateSemaphoreTest {
         Lok[0] = new Aufgabenteil2(history0, privSem);
         Lok[1] = new Aufgabenteil2(history1, privSem);
 
-        t0 = new Thread(new Lok0_privSem(Lok[0]));
-        t1 = new Thread(new Lok1_privSem(Lok[1]));
+        Thread t0 = new Thread(new Lok0_privSem(Lok[0]));
+        Thread t1 = new Thread(new Lok1_privSem(Lok[1]));
 
         t0.start();
         t1.start();
 
         while (true) {
             System.out.print(".");
-            if (System.currentTimeMillis() - startTime > 100 * 1000) {
+            if (System.currentTimeMillis() - startTime > 30 * 1000) {// Zeitlimit kann hier verändert werden
                 System.out.println("~");
                 try {
                     t0.interrupt();
@@ -58,6 +56,13 @@ class privateSemaphoreTest {
             assertEquals(number, counter % 2);
             counter++;
         }
+    }
+
+    @org.junit.jupiter.api.Test
+    void erstenBeiden() {
+        history0 = Lok[0].getHistory();
+        assertEquals(history0.get(0), 0);
+        assertEquals(history0.get(1), 1);
     }
 
 }

@@ -19,16 +19,16 @@ public class Aufgabenteil1 extends Thread {
 
 
     //Initialisieren der Semaphore und der Puffer Variable
-    Semaphore mutex = new Semaphore(1);
-    Semaphore full = new Semaphore(1);
-    Semaphore empty = new Semaphore(0);
-    int Buffer = 0;
+    private Semaphore mutex = new Semaphore(1);
+    private Semaphore full = new Semaphore(1);
+    private Semaphore empty = new Semaphore(0);
+    private int Buffer = 0;
 
     public ArrayList<Integer> getBufferHistory() {
         return bufferHistory;
     }
 
-    ArrayList<Integer> bufferHistory;
+    private ArrayList<Integer> bufferHistory;
 
 
     public Aufgabenteil1(ArrayList<Integer> bufferHistory) {
@@ -37,7 +37,7 @@ public class Aufgabenteil1 extends Thread {
     }
     //Aufgabenteil1
 
-    public void enterLok0() {
+    void enterLok0() {
         try {
             //Überprüfung ob Puffer gefüllt werden kann
             full.acquire();
@@ -56,7 +56,7 @@ public class Aufgabenteil1 extends Thread {
 
     }//enterLok0
 
-    public void exitLok0() {
+    void exitLok0() {
 
         //Erzeugen einer Einheit/ Erhöhen des Buffers
         bufferHistory.add(Buffer);
@@ -65,57 +65,56 @@ public class Aufgabenteil1 extends Thread {
 		
 		/*beenden der Kritschen Abschnittes, gestartet in der Methode enterLok0.
 		Dies wird erst hier beendet, weil der gesamte mittlere Schienenabschnitt der kritische Abschnitt ist*/
-		mutex.release();
+        mutex.release();
 		
 		/*empty.release() um dem Verbraucher zu zeigen, dass der Buffer gefüllt ist und es nun möglich ist, 
 		den Inhalt des Buffers zu verbrauchen */
-		empty.release();
-		
-		//Lokomotive fährt die restliche Strecke
-				try {
-					Thread.sleep((long) (Math.random()*500));
-				}catch(Exception e) {
-					e.printStackTrace();
-				}//try/catch
-		
-		
-	}//exitLok0
-	
-public void enterLok1() {
-		
-		
-	try {
-		
-	
-		//Überprüfung ob Puffer geleert werden kann
-		empty.acquire();
-			
-		//Start des Kritischen Abschnittes  (Lok 1 in dem mittleren Teilstück)	
-		mutex.acquire();
-		//Für die einfachere Überprüfung der Ergebnisse ist dieser Teil ein Stück eingerückt
-		System.out.println("	Die Lok 1 fährt in das mittlere Teilstück");
-			
-		//Lok0 fährt durch das Mittelstück.
-		Thread.sleep((long) (Math.random()*200));
-			
-	}catch (InterruptedException e){
-		e.printStackTrace();
-		}//try/catch
-	}//enterLok1
-	
-		
-		
-	
-	public void exitLok1(){
-		
-		
-		//Verbrauch einer Einheit/ Senkung des Buffers
-		Buffer -= 1;
-		System.out.println("							Die Lok 1 verlässt das Mittelstück");
+        empty.release();
+
+        //Lokomotive fährt die restliche Strecke
+        try {
+            Thread.sleep((long) (Math.random() * 500));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }//try/catch
+
+
+    }//exitLok0
+
+    void enterLok1() {
+
+
+        try {
+
+
+            //Überprüfung ob Puffer geleert werden kann
+            empty.acquire();
+
+            //Start des Kritischen Abschnittes  (Lok 1 in dem mittleren Teilstück)
+            mutex.acquire();
+            //Für die einfachere Überprüfung der Ergebnisse ist dieser Teil ein Stück eingerückt
+            System.out.println("	Die Lok 1 fährt in das mittlere Teilstück");
+
+            //Lok0 fährt durch das Mittelstück.
+            Thread.sleep((long) (Math.random() * 200));
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }//try/catch
+    }//enterLok1
+
+
+    void exitLok1() {
+
+
+        //Verbrauch einer Einheit/ Senkung des Buffers
+        bufferHistory.add(Buffer);
+        Buffer -= 1;
+        System.out.println("							Die Lok 1 verlässt das Mittelstück");
 		
 		/*beenden der Kritschen Abschnittes, gestartet in der Methode enterLok1.
 		Dies wird erst hier beendet, weil der gesamte mittlere Schienenabschnitt den kritische Abschnitt darstellt */
-		mutex.release();
+        mutex.release();
 		
 		/*full.release() um dem Erzeuger zu zeigen, dass der Buffer leer ist und es nun möglich ist, 
 		den Inhalt des Buffers erneut zu erzeugen */
