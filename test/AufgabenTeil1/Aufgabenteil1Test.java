@@ -11,28 +11,25 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class Aufgabenteil1Test {
 
-    private long startTime = 0;
-    private Thread t0;
-    private Thread t1;
-   private Aufgabenteil1 aufg;
+    private Aufgabenteil1 aufg;
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
         System.out.println("Tests werden gestartet");
-        startTime = System.currentTimeMillis();
+        long startTime = System.currentTimeMillis();
         ArrayList<Integer> bufferHistory = new ArrayList<>();
         //bufferHistory.add(0);
         aufg = new Aufgabenteil1(bufferHistory);
 
-        t0 = new Thread(new Lok0(aufg));
-        t1 = new Thread(new Lok1(aufg));
+        Thread t0 = new Thread(new Lok0(aufg));
+        Thread t1 = new Thread(new Lok1(aufg));
 
         t0.start();
         t1.start();
 
         while (true) {
             System.out.print("..");
-            if (System.currentTimeMillis() - startTime > 60 * 1000) {
+            if (System.currentTimeMillis() - startTime > 30 * 1000) {// Zeitlimit kann hier verändert werden
                 System.out.println("SS");
                 t0.interrupt();
                 t1.interrupt();
@@ -44,12 +41,19 @@ class Aufgabenteil1Test {
     @org.junit.jupiter.api.Test
     void main() {
         int counter = 0;
-        for (int number : aufg.getBufferHistory()) {
+        ArrayList<Integer> history = aufg.getBufferHistory();
+        for (int number : history) {
             System.out.print(number + "->");
             assertEquals(number, counter % 2);
             counter++;
         }
         System.out.println(" ");
         System.out.println("Anzahl der Durchfahrten" + aufg.getBufferHistory().size());
+    }
+
+    @org.junit.jupiter.api.Test
+    void erstenBeiden() {
+        assertEquals(aufg.getBufferHistory().get(0), 0);
+        assertEquals(aufg.getBufferHistory().get(1), 1);
     }
 }
